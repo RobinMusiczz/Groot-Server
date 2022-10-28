@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-       - name: checkout Groot-linux
+       - name: checkout groot-linux
          uses: actions/checkout@main
        
        - uses: styfle/cancel-workflow-action@0.9.0
@@ -17,7 +17,7 @@ jobs:
          with:
             all_but_latest: true
             access_token: ${{ github.token }}
-       - name: initialization Groot-linux
+       - name: initialization groot-linux
          continue-on-error: true
          run: |
            git config --global user.name ${{ secrets.GIT_NAME }}
@@ -27,15 +27,15 @@ jobs:
        - name: cloning repository
          continue-on-error: true
          run: |
-           git clone https://${{ secrets.GIT_NAME }}:${{ secrets.GIT_TOKEN }}@${{ secrets.BOT_REPO }} Groot
-       - name: running Groot-linux server
+           git clone https://${{ secrets.GIT_NAME }}:${{ secrets.GIT_TOKEN }}@${{ secrets.BOT_REPO }} groot
+       - name: running groot-linux server
          timeout-minutes: 350
          continue-on-error: true
          run: |
-           cd Groot
-           docker build . -t Groot
-           docker run Groot
-       - name: loop Groot-linux server
+           cd groot
+           docker build . -t groot
+           docker run groot
+       - name: loop groot-linux server
          continue-on-error: true
          run: |
               git clone https://github.com/${GITHUB_REPOSITORY} loop
@@ -43,4 +43,4 @@ jobs:
               echo $(date -u +%T%P) >> loop.txt
               git add loop.txt
               git commit -m "Groot-Linux : Loop $(date -u +%D-%T%P)"
-              git push -q https://${{ secrets.GIT_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:Groot-linux
+              git push -q https://${{ secrets.GIT_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:groot-linux
